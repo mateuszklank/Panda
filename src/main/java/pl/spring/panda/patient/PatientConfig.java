@@ -24,7 +24,8 @@ public class PatientConfig {
                     1L,
                     "mleko",
                     180d,
-                    80d
+                    80d,
+                    "jankowalski@gmail.com"
             );
 
             Patient andrzej = new Patient(
@@ -36,7 +37,8 @@ public class PatientConfig {
                     1L,
                     "orzechy",
                     170d,
-                    70d
+                    70d,
+                    "andrzejnowak@gmail.com"
             );
 
             repository.saveAll(List.of(jan, andrzej));

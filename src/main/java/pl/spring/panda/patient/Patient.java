@@ -30,11 +30,12 @@ public class Patient {
     private String allergies;
     private Double height;
     private Double weight;
+    private String email;
 
     public Patient() {
     }
 
-    public Patient(Long patient_id, String first_name, String last_name, String gender, LocalDate birth_date, String city, Long province_id, String allergies, Double height, Double weight) {
+    public Patient(Long patient_id, String first_name, String last_name, String gender, LocalDate birth_date, String city, Long province_id, String allergies, Double height, Double weight, String email) {
         this.patient_id = patient_id;
         this.first_name = first_name;
         this.last_name = last_name;
@@ -45,9 +46,10 @@ public class Patient {
         this.allergies = allergies;
         this.height = height;
         this.weight = weight;
+        this.email = email;
     }
 
-    public Patient(String first_name, String last_name, String gender, LocalDate birth_date, String city, Long province_id, String allergies, Double height, Double weight) {
+    public Patient(String first_name, String last_name, String gender, LocalDate birth_date, String city, Long province_id, String allergies, Double height, Double weight, String email) {
         this.first_name = first_name;
         this.last_name = last_name;
         this.gender = gender;
@@ -57,6 +59,7 @@ public class Patient {
         this.allergies = allergies;
         this.height = height;
         this.weight = weight;
+        this.email = email;
     }
 
     public Long getPatient_id() {
@@ -139,6 +142,14 @@ public class Patient {
         this.weight = weight;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     @Override
     public String toString() {
         return "Patient{" +
@@ -152,6 +163,7 @@ public class Patient {
                 ", allergies='" + allergies + '\'' +
                 ", height=" + height +
                 ", weight=" + weight +
+                ", email=" + email +
                 '}';
     }
 }
