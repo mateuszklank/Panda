@@ -30,4 +30,12 @@ public class PatientController {
     public void deletePatient (@PathVariable("patientId") Long patientId) {
         patientService.deletePatient(patientId);
     }
+
+    @PutMapping(path = "{patientId}")
+    public void updatePatient (@PathVariable("patientId") Long patientId,
+                               @RequestParam(required = false) String firstName,
+                               @RequestParam(required = false) String lastName,
+                               @RequestParam(required = false) String email) {
+        patientService.updatePatient(patientId, firstName, lastName, email);
+    }
 }
