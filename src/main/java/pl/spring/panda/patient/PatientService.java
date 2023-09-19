@@ -30,4 +30,12 @@ public class PatientService {
         patientRepository.save(patient);
         System.out.println(patient);
     }
+
+    public void deletePatient(Long patientId) {
+        boolean exists = patientRepository.existsById(patientId);
+        if (!exists) {
+            throw new IllegalStateException("An patient with id " + patientId + " does not exists");
+        }
+        patientRepository.deleteById(patientId);
+    }
 }
