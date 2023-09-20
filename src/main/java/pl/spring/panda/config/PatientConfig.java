@@ -14,7 +14,7 @@ import java.util.List;
 public class PatientConfig {
 
     @Bean
-    CommandLineRunner commandLineRunner(PatientRepository repository) {
+    CommandLineRunner commandLineRunner1(PatientRepository repository) {
         return args -> {
 
             Patient jan = new Patient(
@@ -43,7 +43,7 @@ public class PatientConfig {
                     "andrzejnowak@gmail.com"
             );
 
-            repository.saveAll(List.of(jan, andrzej));
+//            repository.saveAll(List.of(jan, andrzej));
         };
     }
 

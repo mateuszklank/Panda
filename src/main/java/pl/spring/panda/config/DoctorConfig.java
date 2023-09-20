@@ -31,7 +31,7 @@ public class DoctorConfig {
                     "alergolog"
             );
 
-            repository.saveAll(List.of(adam, renata));
+//            repository.saveAll(List.of(adam, renata));
         };
     }
 
