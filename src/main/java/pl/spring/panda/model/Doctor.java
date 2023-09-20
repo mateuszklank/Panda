@@ -16,7 +16,7 @@ public class Doctor {
             strategy = GenerationType.SEQUENCE,
             generator = "doctor_sequence"
     )
-    private Long doctor_id;
+    private Long id;
     private String first_name;
     private String last_name;
     private String specialty;
@@ -24,8 +24,8 @@ public class Doctor {
     public Doctor() {
     }
 
-    public Doctor(Long doctor_id, String first_name, String last_name, String specialty) {
-        this.doctor_id = doctor_id;
+    public Doctor(Long id, String first_name, String last_name, String specialty) {
+        this.id = id;
         this.first_name = first_name;
         this.last_name = last_name;
         this.specialty = specialty;
@@ -37,12 +37,12 @@ public class Doctor {
         this.specialty = specialty;
     }
 
-    public Long getDoctor_id() {
-        return doctor_id;
+    public Long getId() {
+        return id;
     }
 
-    public void setDoctor_id(Long doctor_id) {
-        this.doctor_id = doctor_id;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getFirst_name() {
@@ -72,7 +72,7 @@ public class Doctor {
     @Override
     public String toString() {
         return "Doctor{" +
-                "doctor_id=" + doctor_id +
+                "doctor_id=" + id +
                 ", first_name='" + first_name + '\'' +
                 ", last_name='" + last_name + '\'' +
                 ", specialty='" + specialty + '\'' +

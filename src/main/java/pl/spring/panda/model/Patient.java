@@ -2,8 +2,6 @@ package pl.spring.panda.model;
 
 import jakarta.persistence.*;
 
-import java.math.BigDecimal;
-import java.sql.Date;
 import java.time.LocalDate;
 
 @Entity
@@ -20,7 +18,7 @@ public class Patient {
             strategy = GenerationType.SEQUENCE,
             generator = "patient_sequence"
     )
-    private Long patient_id;
+    private Long id;
     private String first_name;
     private String last_name;
     private String gender;
@@ -35,8 +33,8 @@ public class Patient {
     public Patient() {
     }
 
-    public Patient(Long patient_id, String first_name, String last_name, String gender, LocalDate birth_date, String city, Long province_id, String allergies, Double height, Double weight, String email) {
-        this.patient_id = patient_id;
+    public Patient(Long id, String first_name, String last_name, String gender, LocalDate birth_date, String city, Long province_id, String allergies, Double height, Double weight, String email) {
+        this.id = id;
         this.first_name = first_name;
         this.last_name = last_name;
         this.gender = gender;
@@ -62,12 +60,12 @@ public class Patient {
         this.email = email;
     }
 
-    public Long getPatient_id() {
-        return patient_id;
+    public Long getId() {
+        return id;
     }
 
-    public void setPatient_id(Long patient_id) {
-        this.patient_id = patient_id;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getFirst_name() {
@@ -153,7 +151,7 @@ public class Patient {
     @Override
     public String toString() {
         return "Patient{" +
-                "patient_id=" + patient_id +
+                "patient_id=" + id +
                 ", first_name='" + first_name + '\'' +
                 ", last_name='" + last_name + '\'' +
                 ", gender='" + gender + '\'' +
