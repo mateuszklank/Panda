@@ -26,7 +26,7 @@ public class Admission {
 //    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "patient_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonIgnore
+//    @JsonIgnore
     private Patient patient;
     private LocalDate admission_date;
     private LocalDate discharge_date;
@@ -35,7 +35,7 @@ public class Admission {
 //    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "doctor_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonIgnore
+//    @JsonIgnore
     private Doctor doctor;
 
     public Admission() {
