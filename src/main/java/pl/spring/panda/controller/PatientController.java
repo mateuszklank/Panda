@@ -1,7 +1,9 @@
-package pl.spring.panda.patient;
+package pl.spring.panda.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import pl.spring.panda.model.Patient;
+import pl.spring.panda.service.PatientService;
 
 import java.util.List;
 

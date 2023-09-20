@@ -1,11 +1,11 @@
-package pl.spring.panda.patient;
+package pl.spring.panda.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import pl.spring.panda.model.Patient;
+import pl.spring.panda.repository.PatientRepository;
 
-import java.time.LocalDate;
-import java.time.Month;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;

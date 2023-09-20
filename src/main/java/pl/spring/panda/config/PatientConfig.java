@@ -1,8 +1,10 @@
-package pl.spring.panda.patient;
+package pl.spring.panda.config;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import pl.spring.panda.model.Patient;
+import pl.spring.panda.repository.PatientRepository;
 
 import java.time.LocalDate;
 import java.time.Month;

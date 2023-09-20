@@ -1,4 +1,4 @@
-package pl.spring.panda.patient;
+package pl.spring.panda.model;
 
 import jakarta.persistence.*;
 

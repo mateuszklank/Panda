@@ -1,8 +1,9 @@
-package pl.spring.panda.patient;
+package pl.spring.panda.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+import pl.spring.panda.model.Patient;
 
 import java.util.Optional;
 
