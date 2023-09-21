@@ -1,6 +1,7 @@
 package pl.spring.panda.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.spring.panda.model.Patient;
 import pl.spring.panda.service.PatientService;
@@ -23,9 +24,9 @@ public class PatientController {
         return patientService.getPatients();
     }
 
-    @PostMapping
-    public void registerNewPatient (@RequestBody Patient patient) {
-        patientService.addNewPatient(patient);
+    @PostMapping("/province/{provinceId}")
+    public ResponseEntity<Patient> registerNewPatient (@PathVariable(value = "provinceId") Long provinceId, @RequestBody Patient patient) {
+        return patientService.addNewPatient(provinceId, patient);
     }
 
     @DeleteMapping(path = "{patientId}")

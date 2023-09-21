@@ -1,10 +1,13 @@
 package pl.spring.panda.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.spring.panda.model.Patient;
 import pl.spring.panda.repository.PatientRepository;
+import pl.spring.panda.repository.ProvinceRepository;
 
 import java.util.List;
 import java.util.Objects;
@@ -14,23 +17,31 @@ import java.util.Optional;
 public class PatientService {
 
     private final PatientRepository patientRepository;
+    private final ProvinceRepository provinceRepository;
 
     @Autowired
-    public PatientService(PatientRepository patientRepository) {
+    public PatientService(PatientRepository patientRepository, ProvinceRepository provinceRepository) {
         this.patientRepository = patientRepository;
+        this.provinceRepository = provinceRepository;
     }
 
     public List<Patient> getPatients() {
         return patientRepository.findAll();
     }
 
-    public void addNewPatient(Patient patient) {
+    public ResponseEntity<Patient> addNewPatient(Long provinceId, Patient patient) {
         Optional<Patient> patientOptional = patientRepository.findPatientByEmail(patient.getEmail());
         if (patientOptional.isPresent()) {
             throw new IllegalStateException("An patient with this email already exists");
         }
+
+        provinceRepository.findById(provinceId).map(province -> {
+            patient.setProvince(province);
+            return true;
+        }).orElseThrow(() -> new IllegalStateException("Not found province with id " + provinceId));
+
         patientRepository.save(patient);
-        System.out.println(patient);
+        return new ResponseEntity<>(patient, HttpStatus.CREATED);
     }
 
     public void deletePatient(Long patientId) {
