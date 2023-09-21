@@ -16,14 +16,14 @@ public class Province {
             strategy = GenerationType.SEQUENCE,
             generator = "province_sequence"
     )
-    private Long province_id;
+    private Long id;
     private String province_name;
 
     public Province() {
     }
 
-    public Province(Long province_id, String province_name) {
-        this.province_id = province_id;
+    public Province(Long id, String province_name) {
+        this.id = id;
         this.province_name = province_name;
     }
 
@@ -31,12 +31,12 @@ public class Province {
         this.province_name = province_name;
     }
 
-    public Long getProvince_id() {
-        return province_id;
+    public Long getId() {
+        return id;
     }
 
-    public void setProvince_id(Long province_id) {
-        this.province_id = province_id;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getProvince_name() {
@@ -50,7 +50,7 @@ public class Province {
     @Override
     public String toString() {
         return "Province{" +
-                "province_id=" + province_id +
+                "id=" + id +
                 ", province_name='" + province_name + '\'' +
                 '}';
     }
