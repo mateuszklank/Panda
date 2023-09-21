@@ -17,31 +17,31 @@ public class PatientConfig {
     CommandLineRunner commandLineRunner1(PatientRepository repository) {
         return args -> {
 
-            Patient jan = new Patient(
-                    "Jan",
-                    "Kowalski",
-                    "m",
-                    LocalDate.of(1980, Month.APRIL, 15),
-                    "Warszawa",
-                    1L,
-                    "mleko",
-                    180d,
-                    80d,
-                    "jankowalski@gmail.com"
-            );
-
-            Patient andrzej = new Patient(
-                    "Andrzej",
-                    "Nowak",
-                    "m",
-                    LocalDate.of(1960, Month.JUNE, 25),
-                    "Warszawa",
-                    1L,
-                    "orzechy",
-                    170d,
-                    70d,
-                    "andrzejnowak@gmail.com"
-            );
+//            Patient jan = new Patient(
+//                    "Jan",
+//                    "Kowalski",
+//                    "m",
+//                    LocalDate.of(1980, Month.APRIL, 15),
+//                    "Warszawa",
+//                    1L,
+//                    "mleko",
+//                    180d,
+//                    80d,
+//                    "jankowalski@gmail.com"
+//            );
+//
+//            Patient andrzej = new Patient(
+//                    "Andrzej",
+//                    "Nowak",
+//                    "m",
+//                    LocalDate.of(1960, Month.JUNE, 25),
+//                    "Warszawa",
+//                    1L,
+//                    "orzechy",
+//                    170d,
+//                    70d,
+//                    "andrzejnowak@gmail.com"
+//            );
 
 //            repository.saveAll(List.of(jan, andrzej));
         };

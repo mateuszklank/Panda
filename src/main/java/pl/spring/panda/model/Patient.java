@@ -1,6 +1,8 @@
 package pl.spring.panda.model;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.time.LocalDate;
 
@@ -24,40 +26,45 @@ public class Patient {
     private String gender;
     private LocalDate birth_date;
     private String city;
-    private Long province_id;
     private String allergies;
     private Double height;
     private Double weight;
     private String email;
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+//    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "province_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+//    @JsonIgnore
+    private Province province;
 
     public Patient() {
     }
 
-    public Patient(Long id, String first_name, String last_name, String gender, LocalDate birth_date, String city, Long province_id, String allergies, Double height, Double weight, String email) {
+    public Patient(Long id, String first_name, String last_name, String gender, LocalDate birth_date, String city, String allergies, Double height, Double weight, String email, Province province) {
         this.id = id;
         this.first_name = first_name;
         this.last_name = last_name;
         this.gender = gender;
         this.birth_date = birth_date;
         this.city = city;
-        this.province_id = province_id;
         this.allergies = allergies;
         this.height = height;
         this.weight = weight;
         this.email = email;
+        this.province = province;
     }
 
-    public Patient(String first_name, String last_name, String gender, LocalDate birth_date, String city, Long province_id, String allergies, Double height, Double weight, String email) {
+    public Patient(String first_name, String last_name, String gender, LocalDate birth_date, String city, String allergies, Double height, Double weight, String email, Province province) {
         this.first_name = first_name;
         this.last_name = last_name;
         this.gender = gender;
         this.birth_date = birth_date;
         this.city = city;
-        this.province_id = province_id;
         this.allergies = allergies;
         this.height = height;
         this.weight = weight;
         this.email = email;
+        this.province = province;
     }
 
     public Long getId() {
@@ -108,14 +115,6 @@ public class Patient {
         this.city = city;
     }
 
-    public Long getProvince_id() {
-        return province_id;
-    }
-
-    public void setProvince_id(Long province_id) {
-        this.province_id = province_id;
-    }
-
     public String getAllergies() {
         return allergies;
     }
@@ -148,20 +147,28 @@ public class Patient {
         this.email = email;
     }
 
+    public Province getProvince() {
+        return province;
+    }
+
+    public void setProvince(Province province) {
+        this.province = province;
+    }
+
     @Override
     public String toString() {
         return "Patient{" +
-                "patient_id=" + id +
+                "id=" + id +
                 ", first_name='" + first_name + '\'' +
                 ", last_name='" + last_name + '\'' +
                 ", gender='" + gender + '\'' +
                 ", birth_date=" + birth_date +
                 ", city='" + city + '\'' +
-                ", province_id=" + province_id +
                 ", allergies='" + allergies + '\'' +
                 ", height=" + height +
                 ", weight=" + weight +
-                ", email=" + email +
+                ", email='" + email + '\'' +
+                ", province=" + province +
                 '}';
     }
 }
