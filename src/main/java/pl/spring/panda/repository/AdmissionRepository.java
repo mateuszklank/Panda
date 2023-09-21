@@ -13,6 +13,8 @@ public interface AdmissionRepository extends JpaRepository<Admission, Long> {
 
     List<Admission> findByPatientId(Long patientId);
 
+    List<Admission> findByDoctorId(Long doctorId);
+
     @Transactional
     void deleteByPatientId(Long patientId);
 }

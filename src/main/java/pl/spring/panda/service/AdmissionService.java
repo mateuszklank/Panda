@@ -41,6 +41,15 @@ public class AdmissionService {
         return new ResponseEntity<>(admissions, HttpStatus.OK);
     }
 
+    public ResponseEntity<List<Admission>> getAllAdmissionsByDoctorId(Long doctorId) {
+        if (!doctorRepository.existsById(doctorId)) {
+            throw new IllegalStateException("Not found doctor with id " + doctorId);
+        }
+
+        List<Admission> admissions = admissionRepository.findByDoctorId(doctorId);
+        return new ResponseEntity<>(admissions, HttpStatus.OK);
+    }
+
     public ResponseEntity<Admission> getAdmissionById(Long admissionId) {
         Admission admission = admissionRepository.findById(admissionId)
                 .orElseThrow(() -> new IllegalStateException("Not found admission with id " + admissionId));

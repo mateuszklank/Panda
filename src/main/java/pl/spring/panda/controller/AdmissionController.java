@@ -28,6 +28,11 @@ public class AdmissionController {
         return admissionService.getAllAdmissionsByPatientId(patientId);
     }
 
+    @GetMapping("/doctors/{doctorId}/admissions")
+    public ResponseEntity<List<Admission>> getAllAdmissionsByDoctorId(@PathVariable(value = "doctorId") Long doctorId) {
+        return admissionService.getAllAdmissionsByDoctorId(doctorId);
+    }
+
     @GetMapping("/admissions/{admissionId}")
     public ResponseEntity<Admission> getAdmissionById(@PathVariable(value = "admissionId") Long admissionId) {
         return admissionService.getAdmissionById(admissionId);
