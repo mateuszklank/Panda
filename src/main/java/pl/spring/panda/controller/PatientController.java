@@ -8,7 +8,7 @@ import pl.spring.panda.service.PatientService;
 import java.util.List;
 
 @RestController
-@RequestMapping(path = "api/v1/patient")
+@RequestMapping(path = "/api/patients")
 public class PatientController {
 
     private final PatientService patientService;
