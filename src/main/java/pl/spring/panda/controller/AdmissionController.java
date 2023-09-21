@@ -38,7 +38,7 @@ public class AdmissionController {
         return admissionService.getAdmissionById(admissionId);
     }
 
-    @PostMapping("/patients/{patientId}/{doctorId}/admissions")
+    @PostMapping("/patients/{patientId}/doctors/{doctorId}/admissions")
     public ResponseEntity<Admission> createAdmission(@PathVariable(value = "patientId") Long patientId, @PathVariable(value = "doctorId") Long doctorId, @RequestBody Admission admissionRequest) {
         return admissionService.createAdmission(patientId, doctorId, admissionRequest);
     }
