@@ -6,7 +6,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.spring.panda.model.jdbcmodel.JdbcDoctor;
 import pl.spring.panda.model.jdbcmodel.JdbcPatient;
+import pl.spring.panda.model.jdbcmodel.JdbcProvince;
 import pl.spring.panda.repository.jdbcrepository.JdbcPatientRepository;
+import pl.spring.panda.repository.jdbcrepository.JdbcProvinceRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +20,9 @@ public class JdbcPatientController {
 
     @Autowired
     JdbcPatientRepository jdbcPatientRepository;
+
+    @Autowired
+    JdbcProvinceRepository jdbcProvinceRepository;
 
     @GetMapping("/patients")
     public ResponseEntity<List<JdbcPatient>> getAllPatients(@RequestParam(required = false) String lastName) {
@@ -51,12 +56,17 @@ public class JdbcPatientController {
     }
 
     @PostMapping("/patient")
-    public ResponseEntity<JdbcPatient> createPatient(@RequestBody JdbcPatient patient) {
-        try {
-            jdbcPatientRepository.save(new JdbcPatient(patient.getFirst_name(), patient.getLast_name(), patient.getGender(), patient.getBirth_date(), patient.getCity(), patient.getProvince_id(), patient.getAllergies(), patient.getHeight(), patient.getWeight(), patient.getEmail()));
-            return new ResponseEntity<>(patient, HttpStatus.CREATED);
-        } catch (Exception e) {
-            return new ResponseEntity<>(patient, HttpStatus.INTERNAL_SERVER_ERROR);
+    public ResponseEntity<String> createPatient(@RequestBody JdbcPatient patient) {
+        JdbcProvince _province = jdbcProvinceRepository.findById(patient.getProvince_id());
+        if (_province != null) {
+            try {
+                jdbcPatientRepository.save(new JdbcPatient(patient.getFirst_name(), patient.getLast_name(), patient.getGender(), patient.getBirth_date(), patient.getCity(), patient.getProvince_id(), patient.getAllergies(), patient.getHeight(), patient.getWeight(), patient.getEmail()));
+                return new ResponseEntity<>("Patient created " + patient, HttpStatus.CREATED);
+            } catch (Exception e) {
+                return new ResponseEntity<>("Can't create patient " + patient, HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+        } else {
+            return new ResponseEntity<>("Not found province with id " + patient.getProvince_id(), HttpStatus.NOT_FOUND);
         }
     }
 

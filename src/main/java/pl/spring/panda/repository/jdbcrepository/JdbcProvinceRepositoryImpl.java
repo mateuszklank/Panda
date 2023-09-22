@@ -1,6 +1,7 @@
 package pl.spring.panda.repository.jdbcrepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -25,5 +26,17 @@ public class JdbcProvinceRepositoryImpl implements JdbcProvinceRepository {
         String q = "SELECT * from zjdbc_province WHERE province_name ILIKE '%" + provinceName + "%'";
 
         return jdbcTemplate.query(q, BeanPropertyRowMapper.newInstance(JdbcProvince.class));
+    }
+
+    @Override
+    public JdbcProvince findById(Long id) {
+        try {
+            JdbcProvince province = jdbcTemplate.queryForObject("SELECT * FROM zjdbc_province WHERE id=?",
+                    BeanPropertyRowMapper.newInstance(JdbcProvince.class), id);
+
+            return province;
+        } catch (IncorrectResultSizeDataAccessException e) {
+            return null;
+        }
     }
 }
