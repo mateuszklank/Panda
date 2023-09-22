@@ -1,11 +1,19 @@
 package pl.spring.panda.model.jdbcmodel;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.relational.core.mapping.MappedCollection;
+
+import java.util.Set;
+
 public class JdbcDoctor {
 
+    @Id
     private Long id;
     private String first_name;
     private String last_name;
     private String specialty;
+    @MappedCollection(keyColumn = "id", idColumn = "id")
+    private Set<JdbcAdmission> admissions;
 
     public JdbcDoctor() {
     }
@@ -55,13 +63,22 @@ public class JdbcDoctor {
         this.specialty = specialty;
     }
 
+    public Set<JdbcAdmission> getAdmissions() {
+        return admissions;
+    }
+
+    public void setAdmissions(Set<JdbcAdmission> admissions) {
+        this.admissions = admissions;
+    }
+
     @Override
     public String toString() {
-        return "jdbcDoctor{" +
+        return "JdbcDoctor{" +
                 "id=" + id +
                 ", first_name='" + first_name + '\'' +
                 ", last_name='" + last_name + '\'' +
                 ", specialty='" + specialty + '\'' +
+                ", admissions=" + admissions +
                 '}';
     }
 }
