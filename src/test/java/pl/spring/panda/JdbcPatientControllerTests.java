@@ -13,11 +13,13 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class JdbcPatientControllerTests extends AbstractTest {
+
     @Override
     @Before
     public void setUp() {
         super.setUp();
     }
+
     @Test
     public void getAllPatientsTest() throws Exception {
         String uri = "/api/jdbc/patients";
@@ -29,6 +31,19 @@ public class JdbcPatientControllerTests extends AbstractTest {
         String content = mvcResult.getResponse().getContentAsString();
         JdbcPatient[] patients = super.mapFromJson(content, JdbcPatient[].class);
         assertTrue(patients.length > 0);
+    }
+
+    @Test
+    public void getPatientById() throws Exception {
+        String uri = "/api/jdbc/patient/8?admission=0";
+        MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.get(uri)
+                .accept(MediaType.APPLICATION_JSON_VALUE)).andReturn();
+
+        int status = mvcResult.getResponse().getStatus();
+        assertEquals(200, status);
+        String content = mvcResult.getResponse().getContentAsString();
+        JdbcPatient patient = super.mapFromJson(content, JdbcPatient.class);
+        assertEquals("{\"id\":8,\"first_name\":\"Kacper\",\"last_name\":\"Mazur\",\"gender\":\"m\",\"birth_date\":\"1983-11-12\",\"city\":\"Kielce\",\"province_id\":12,\"allergies\":\"orzechy\",\"height\":178.0,\"weight\":69.0,\"email\":\"kacpermazur@gmail.com\",\"admissions\":null}", content);
     }
 
     @Test
