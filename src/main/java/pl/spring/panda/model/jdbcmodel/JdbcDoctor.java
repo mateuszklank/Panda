@@ -1,5 +1,6 @@
 package pl.spring.panda.model.jdbcmodel;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.MappedCollection;
 
@@ -14,6 +15,11 @@ public class JdbcDoctor {
     private String specialty;
     @MappedCollection(keyColumn = "id", idColumn = "id")
     private Set<JdbcAdmission> admissions;
+    @JsonIgnore
+    @MappedCollection(keyColumn = "id", idColumn = "id")
+    private Set<JdbcDoctorInstitution> doctorInstitutionSet;
+    @MappedCollection(keyColumn = "id", idColumn = "id")
+    private Set<JdbcInstitution> institutions;
 
     public JdbcDoctor() {
     }
@@ -71,6 +77,22 @@ public class JdbcDoctor {
         this.admissions = admissions;
     }
 
+    public Set<JdbcDoctorInstitution> getDoctorInstitutionSet() {
+        return doctorInstitutionSet;
+    }
+
+    public void setDoctorInstitutionSet(Set<JdbcDoctorInstitution> doctorInstitutionSet) {
+        this.doctorInstitutionSet = doctorInstitutionSet;
+    }
+
+    public Set<JdbcInstitution> getInstitutions() {
+        return institutions;
+    }
+
+    public void setInstitutions(Set<JdbcInstitution> institutions) {
+        this.institutions = institutions;
+    }
+
     @Override
     public String toString() {
         return "JdbcDoctor{" +
@@ -79,6 +101,8 @@ public class JdbcDoctor {
                 ", last_name='" + last_name + '\'' +
                 ", specialty='" + specialty + '\'' +
                 ", admissions=" + admissions +
+                ", doctorInstitutionSet=" + doctorInstitutionSet +
+                ", institutions=" + institutions +
                 '}';
     }
 }

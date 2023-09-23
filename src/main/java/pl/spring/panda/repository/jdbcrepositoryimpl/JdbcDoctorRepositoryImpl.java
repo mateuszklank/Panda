@@ -5,10 +5,12 @@ import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
-import pl.spring.panda.model.jdbcmodel.JdbcDoctor;
+import pl.spring.panda.model.jdbcmodel.*;
 import pl.spring.panda.repository.jdbcrepository.JdbcDoctorRepository;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 @Repository
 public class JdbcDoctorRepositoryImpl implements JdbcDoctorRepository {
@@ -34,6 +36,30 @@ public class JdbcDoctorRepositoryImpl implements JdbcDoctorRepository {
             JdbcDoctor doctor = jdbcTemplate.queryForObject("SELECT * FROM zjdbc_doctor WHERE id=?",
                     BeanPropertyRowMapper.newInstance(JdbcDoctor.class), id);
 
+            return doctor;
+        } catch (IncorrectResultSizeDataAccessException e) {
+            return null;
+        }
+    }
+
+    @Override
+    public JdbcDoctor findByIdWithInstitutions(Long id) {
+        try {
+            JdbcDoctor doctor = jdbcTemplate.queryForObject("SELECT * FROM zjdbc_doctor WHERE id=?",
+                    BeanPropertyRowMapper.newInstance(JdbcDoctor.class), id);
+            List<JdbcDoctorInstitution> doctorInstitutionList = jdbcTemplate.query("SELECT * FROM zjdbc_doctor_institution WHERE doctor_id=?",
+                    BeanPropertyRowMapper.newInstance(JdbcDoctorInstitution.class), id);
+            Set<JdbcInstitution> institutions = new java.util.HashSet<>(Collections.emptySet());
+            for (final JdbcDoctorInstitution doctorInstitution : doctorInstitutionList) {
+                Long institution_id = doctorInstitution.getInstitution_id();
+                JdbcInstitution institution = jdbcTemplate.queryForObject("SELECT * FROM zjdbc_institution WHERE id=?",
+                        BeanPropertyRowMapper.newInstance(JdbcInstitution.class), institution_id);
+                institutions.add(institution);
+            }
+            if (doctor != null) {
+                doctor.setDoctorInstitutionSet(Set.copyOf(doctorInstitutionList));
+                doctor.setInstitutions(institutions);
+            }
             return doctor;
         } catch (IncorrectResultSizeDataAccessException e) {
             return null;

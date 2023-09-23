@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.spring.panda.model.jdbcmodel.JdbcDoctor;
+import pl.spring.panda.model.jdbcmodel.JdbcDoctorInstitution;
 import pl.spring.panda.repository.jdbcrepository.JdbcDoctorRepository;
 
 import java.util.ArrayList;
@@ -39,9 +40,13 @@ public class JdbcDoctorController {
     }
 
     @GetMapping("/doctor/{id}")
-    public ResponseEntity<JdbcDoctor> getDoctorById(@PathVariable("id") Long id) {
-        JdbcDoctor doctor = jdbcDoctorRepository.findById(id);
-
+    public ResponseEntity<JdbcDoctor> getDoctorById(@PathVariable("id") Long id, @RequestParam(required = false) Boolean institution) {
+        JdbcDoctor doctor;
+        if (institution) {
+            doctor = jdbcDoctorRepository.findByIdWithInstitutions(id);
+        } else {
+            doctor = jdbcDoctorRepository.findById(id);
+        }
         if (doctor != null) {
             return new ResponseEntity<>(doctor, HttpStatus.OK);
         } else {

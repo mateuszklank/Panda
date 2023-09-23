@@ -12,6 +12,8 @@ public interface JdbcDoctorRepository {
 
     JdbcDoctor findById(Long id);
 
+    JdbcDoctor findByIdWithInstitutions(Long id);
+
     int deleteById(Long id);
 
     List<JdbcDoctor> findAll();
