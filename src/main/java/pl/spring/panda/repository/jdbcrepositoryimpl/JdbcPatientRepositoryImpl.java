@@ -1,4 +1,4 @@
-package pl.spring.panda.repository.jdbcrepository;
+package pl.spring.panda.repository.jdbcrepositoryimpl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.IncorrectResultSizeDataAccessException;
@@ -7,6 +7,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import pl.spring.panda.model.jdbcmodel.JdbcDoctor;
 import pl.spring.panda.model.jdbcmodel.JdbcPatient;
+import pl.spring.panda.repository.jdbcrepository.JdbcPatientRepository;
 
 import java.util.List;
 
