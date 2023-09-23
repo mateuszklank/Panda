@@ -82,7 +82,7 @@ public class JdbcPatientController {
     }
 
     @PutMapping("/patient/{id}")
-    public ResponseEntity<String> updateDoctor(@PathVariable("id") Long id, @RequestBody JdbcPatient patient) {
+    public ResponseEntity<String> updatePatient(@PathVariable("id") Long id, @RequestBody JdbcPatient patient) {
         JdbcPatient _patient = jdbcPatientRepository.findById(id);
 
         if (_patient != null) {

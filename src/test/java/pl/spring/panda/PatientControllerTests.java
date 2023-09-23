@@ -33,24 +33,4 @@ public class PatientControllerTests extends AbstractTest {
         Patient[] patients = super.mapFromJson(content, Patient[].class);
         assertTrue(patients.length > 0);
     }
-
-    @Test
-    public void createDoctor() throws Exception {
-        String uri = "/api/doctors";
-        Doctor doctor = new Doctor(19L, "Jan", "Testowy", "alergolog");
-//        doctor.setId(1L);
-//        doctor.setFirst_name("a");
-//        doctor.setLast_name("b");
-//        doctor.setSpecialty("c");
-
-        String inputJson = super.mapToJson(doctor);
-        MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.post(uri)
-                .contentType(MediaType.APPLICATION_JSON_VALUE).content(inputJson)).andReturn();
-
-        int status = mvcResult.getResponse().getStatus();
-        assertEquals(201, status);
-        String content = mvcResult.getResponse().getContentAsString();
-
-        assertEquals(content, "{\"id\":19,\"first_name\":\"Jan\",\"last_name\":\"Testowy\",\"specialty\":\"alergolog\"}");
-    }
 }
