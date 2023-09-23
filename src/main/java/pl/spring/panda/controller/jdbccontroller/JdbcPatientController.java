@@ -45,20 +45,13 @@ public class JdbcPatientController {
     }
 
     @GetMapping("/patient/{id}")
-    public ResponseEntity<JdbcPatient> getPatientById(@PathVariable("id") Long id) {
-        JdbcPatient patient = jdbcPatientRepository.findById(id);
-
-        if (patient != null) {
-            return new ResponseEntity<>(patient, HttpStatus.OK);
+    public ResponseEntity<JdbcPatient> getPatientById(@PathVariable("id") Long id, @RequestParam(required = false) Boolean admission) {
+        JdbcPatient patient;
+        if (admission) {
+            patient = jdbcPatientRepository.findByIdWithAdmissions(id);
         } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            patient = jdbcPatientRepository.findById(id);
         }
-    }
-
-    @GetMapping("/patient-with-admissions/{id}")
-    public ResponseEntity<JdbcPatient> getPatientWithAdmissionsById(@PathVariable("id") Long id) {
-        JdbcPatient patient = jdbcPatientRepository.findByIdWithAdmissions(id);
-
         if (patient != null) {
             return new ResponseEntity<>(patient, HttpStatus.OK);
         } else {
