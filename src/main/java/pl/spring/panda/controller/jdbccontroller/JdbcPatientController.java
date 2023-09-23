@@ -55,6 +55,17 @@ public class JdbcPatientController {
         }
     }
 
+    @GetMapping("/patient-with-admissions/{id}")
+    public ResponseEntity<JdbcPatient> getPatientWithAdmissionsById(@PathVariable("id") Long id) {
+        JdbcPatient patient = jdbcPatientRepository.findByIdWithAdmissions(id);
+
+        if (patient != null) {
+            return new ResponseEntity<>(patient, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
     @PostMapping("/patient")
     public ResponseEntity<String> createPatient(@RequestBody JdbcPatient patient) {
         JdbcProvince _province = jdbcProvinceRepository.findById(patient.getProvince_id());

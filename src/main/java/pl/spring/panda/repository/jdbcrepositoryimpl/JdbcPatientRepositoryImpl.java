@@ -5,11 +5,12 @@ import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
-import pl.spring.panda.model.jdbcmodel.JdbcDoctor;
+import pl.spring.panda.model.jdbcmodel.JdbcAdmission;
 import pl.spring.panda.model.jdbcmodel.JdbcPatient;
 import pl.spring.panda.repository.jdbcrepository.JdbcPatientRepository;
 
 import java.util.List;
+import java.util.Set;
 
 @Repository
 public class JdbcPatientRepositoryImpl implements JdbcPatientRepository {
@@ -35,6 +36,21 @@ public class JdbcPatientRepositoryImpl implements JdbcPatientRepository {
             JdbcPatient patient = jdbcTemplate.queryForObject("SELECT * FROM zjdbc_patient WHERE id=?",
                     BeanPropertyRowMapper.newInstance(JdbcPatient.class), id);
 
+            return patient;
+        } catch (IncorrectResultSizeDataAccessException e) {
+            return null;
+        }
+    }
+
+    @Override
+    public JdbcPatient findByIdWithAdmissions(Long id) {
+        try {
+            JdbcPatient patient = jdbcTemplate.queryForObject("SELECT * FROM zjdbc_patient WHERE id=?",
+                    BeanPropertyRowMapper.newInstance(JdbcPatient.class), id);
+            List<JdbcAdmission> admissions = jdbcTemplate.query("SELECT * FROM zjdbc_admission WHERE patient_id=?",
+                    BeanPropertyRowMapper.newInstance(JdbcAdmission.class), id);
+            Set<JdbcAdmission> admissionsSet = Set.copyOf(admissions);
+            patient.setAdmissions(admissionsSet);
             return patient;
         } catch (IncorrectResultSizeDataAccessException e) {
             return null;

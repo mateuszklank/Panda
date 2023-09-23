@@ -12,6 +12,8 @@ public interface JdbcPatientRepository {
 
     JdbcPatient findById(Long id);
 
+    JdbcPatient findByIdWithAdmissions(Long id);
+
     int deleteById(Long id);
 
     List<JdbcPatient> findAll();
