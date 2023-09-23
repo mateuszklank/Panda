@@ -1,5 +1,7 @@
 package pl.spring.panda.controller.jdbccontroller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +18,8 @@ import java.util.List;
 @RequestMapping("/api/jdbc")
 public class JdbcDoctorController {
 
+    Logger logger = LoggerFactory.getLogger(JdbcDoctorController.class);
+
     @Autowired
     JdbcDoctorRepository jdbcDoctorRepository;
 
@@ -24,17 +28,20 @@ public class JdbcDoctorController {
         try {
             List<JdbcDoctor> doctors = new ArrayList<JdbcDoctor>();
 
-            if (lastName == null)
+            if (lastName == null) {
+                logger.info("getAllDoctors(lastName=null)");
                 jdbcDoctorRepository.findAll().forEach(doctors::add);
-            else
+            } else {
+                logger.info("getAllDoctors(lastName=" + lastName + ")");
                 jdbcDoctorRepository.findByLastNameContaining(lastName).forEach(doctors::add);
-
+            }
             if (doctors.isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
-
+            logger.info("getAllDoctors() Result: " + doctors);
             return new ResponseEntity<>(doctors, HttpStatus.OK);
         } catch (Exception e) {
+            logger.error("getAllDoctors() Error:" + e);
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -43,11 +50,14 @@ public class JdbcDoctorController {
     public ResponseEntity<JdbcDoctor> getDoctorById(@PathVariable("id") Long id, @RequestParam(required = false) Boolean institution) {
         JdbcDoctor doctor;
         if (institution) {
+            logger.info("getDoctorById(institutions=true)");
             doctor = jdbcDoctorRepository.findByIdWithInstitutions(id);
         } else {
+            logger.info("getDoctorById(institutions=false)");
             doctor = jdbcDoctorRepository.findById(id);
         }
         if (doctor != null) {
+            logger.info("getDoctorById() Result: " + doctor);
             return new ResponseEntity<>(doctor, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
