@@ -49,8 +49,9 @@ public class JdbcPatientRepositoryImpl implements JdbcPatientRepository {
                     BeanPropertyRowMapper.newInstance(JdbcPatient.class), id);
             List<JdbcAdmission> admissions = jdbcTemplate.query("SELECT * FROM zjdbc_admission WHERE patient_id=?",
                     BeanPropertyRowMapper.newInstance(JdbcAdmission.class), id);
-            Set<JdbcAdmission> admissionsSet = Set.copyOf(admissions);
-            patient.setAdmissions(admissionsSet);
+            if (patient != null) {
+                patient.setAdmissions(Set.copyOf(admissions));
+            }
             return patient;
         } catch (IncorrectResultSizeDataAccessException e) {
             return null;
