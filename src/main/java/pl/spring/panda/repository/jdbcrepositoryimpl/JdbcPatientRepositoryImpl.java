@@ -9,6 +9,7 @@ import pl.spring.panda.model.jdbcmodel.JdbcAdmission;
 import pl.spring.panda.model.jdbcmodel.JdbcPatient;
 import pl.spring.panda.repository.jdbcrepository.JdbcPatientRepository;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 
@@ -64,8 +65,26 @@ public class JdbcPatientRepositoryImpl implements JdbcPatientRepository {
     }
 
     @Override
-    public List<JdbcPatient> findAll() {
-        return jdbcTemplate.query("SELECT * from zjdbc_patient", BeanPropertyRowMapper.newInstance(JdbcPatient.class));
+    public List<JdbcPatient> findAll(String lastName, LocalDate dateAfter) {
+        String q;
+        if (lastName != null && dateAfter != null) {
+            q = "SELECT * from zjdbc_patient WHERE birth_date > '" + dateAfter + "' AND last_name ILIKE '%" + lastName + "%'";
+            return jdbcTemplate.query(q, BeanPropertyRowMapper.newInstance(JdbcPatient.class));
+        } else if (lastName == null && dateAfter == null) {
+            q = "SELECT * from zjdbc_patient";
+            return jdbcTemplate.query(q, BeanPropertyRowMapper.newInstance(JdbcPatient.class));
+        } else if (lastName != null) {
+            q = "SELECT * from zjdbc_patient WHERE last_name ILIKE '%" + lastName + "%'";
+            return jdbcTemplate.query(q, BeanPropertyRowMapper.newInstance(JdbcPatient.class));
+        } else {
+            q = "SELECT * from zjdbc_patient WHERE birth_date > '" + dateAfter + "'";
+            return jdbcTemplate.query(q, BeanPropertyRowMapper.newInstance(JdbcPatient.class));
+        }
+    }
+
+    @Override
+    public List<JdbcPatient> findByDateAfter(LocalDate dateAfter) {
+        return jdbcTemplate.query("SELECT * from zjdbc_patient WHERE birth_date > " + dateAfter + ";", BeanPropertyRowMapper.newInstance(JdbcPatient.class));
     }
 
     @Override

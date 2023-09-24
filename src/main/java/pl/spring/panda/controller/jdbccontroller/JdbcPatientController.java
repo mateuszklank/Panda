@@ -10,6 +10,7 @@ import pl.spring.panda.model.jdbcmodel.JdbcProvince;
 import pl.spring.panda.repository.jdbcrepository.JdbcPatientRepository;
 import pl.spring.panda.repository.jdbcrepository.JdbcProvinceRepository;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,14 +26,10 @@ public class JdbcPatientController {
     JdbcProvinceRepository jdbcProvinceRepository;
 
     @GetMapping("/patients")
-    public ResponseEntity<List<JdbcPatient>> getAllPatients(@RequestParam(required = false) String lastName) {
+    public ResponseEntity<List<JdbcPatient>> getAllPatients(@RequestParam(required = false) String lastName, @RequestParam(required = false) LocalDate dateAfter) {
         try {
             List<JdbcPatient> patients = new ArrayList<JdbcPatient>();
-
-            if (lastName == null)
-                jdbcPatientRepository.findAll().forEach(patients::add);
-            else
-                jdbcPatientRepository.findByLastNameContaining(lastName).forEach(patients::add);
+            jdbcPatientRepository.findAll(lastName, dateAfter).forEach(patients::add);
 
             if (patients.isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
