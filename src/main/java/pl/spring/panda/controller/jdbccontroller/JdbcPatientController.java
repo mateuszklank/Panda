@@ -1,5 +1,7 @@
 package pl.spring.panda.controller.jdbccontroller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +21,8 @@ import java.util.List;
 @RequestMapping("/api/jdbc")
 public class JdbcPatientController {
 
+    Logger logger = LoggerFactory.getLogger(JdbcDoctorController.class);
+
     @Autowired
     JdbcPatientRepository jdbcPatientRepository;
 
@@ -32,11 +36,13 @@ public class JdbcPatientController {
             jdbcPatientRepository.findAll(lastName, dateAfter).forEach(patients::add);
 
             if (patients.isEmpty()) {
+                logger.info("getAllPatients() Result: {}", patients);
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
-
+            logger.info("getAllPatients() Result: {}", patients);
             return new ResponseEntity<>(patients, HttpStatus.OK);
         } catch (Exception e) {
+            logger.error("getAllPatients() Error:" + e);
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

@@ -38,7 +38,7 @@ public class JdbcDoctorController {
             if (doctors.isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
-            logger.info("getAllDoctors() Result: " + doctors);
+            logger.info("getAllDoctors() Result: {}", doctors);
             return new ResponseEntity<>(doctors, HttpStatus.OK);
         } catch (Exception e) {
             logger.error("getAllDoctors() Error:" + e);
